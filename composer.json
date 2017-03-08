@@ -1,0 +1,13 @@
+{
+    "name": "shortlist-digital/brand-taxonomy",
+    "description": "Add a brand to a product post",
+    "type": "wordpress-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Shortlist Studio",
+            "email": "hi@shortlist.studio"
+        }
+    ],
+    "require": {}
+}
