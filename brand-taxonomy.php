@@ -36,34 +36,42 @@ class BrandTaxonomy
 	{
 		remove_meta_box('tagsdiv-brand', 'product', 'normal');
 	}
-	public function add_nice_brand_selector($acf_fields, $key)
+	public function add_nice_brand_selector()
 	{
-		$brandSelector = array(
-			'key' => $key . '_brand',
-			'label' => 'Brand',
-			'name' => 'brand',
-			'type' => 'taxonomy',
-			'instructions' => 'Select a brand for this content',
-			'required' => 1,
-			'taxonomy' => 'brand',
-			'field_type' => 'select',
-			'allow_null' => 0,
-			'add_term' => 0,
-			'save_terms' => 1,
-			'load_terms' => 1,
-			'return_format' => 'object',
-			'multiple' => 0,
-		);
-		$location = array(
-			array (
-				'param' => 'post_type',
-				'operator' => '==',
-				'value' => 'product',
+		acf_add_local_field_group(array (
+			'key' => 'group_brand',
+			'title' => 'Brand',
+			'fields' => array (
+				array (
+					'key' => 'product_brand',
+					'label' => 'Brand',
+					'name' => 'brand',
+					'type' => 'taxonomy',
+					'instructions' => 'Select a brand for this content',
+					'required' => 1,
+					'taxonomy' => 'brand',
+					'field_type' => 'select',
+					'allow_null' => 0,
+					'add_term' => 0,
+					'save_terms' => 1,
+					'load_terms' => 1,
+					'return_format' => 'object',
+					'label_placement' => 'top',
+					'instruction_placement' => 'label',
+					'active' => 1,
+					'description' => 'Select a brand for this content',
+				),
 			),
-		);
-		array_push($acf_fields['fields'], $brandSelector);
-		array_push($acf_fields['location'], $location);
-		return $acf_fields;
+			'location' => array (
+				array (
+					array (
+						'param' => 'post_type',
+						'operator' => '==',
+						'value' => 'product',
+					),
+				),
+			),
+		));
 	}
 	public function apply_acf_to_brand($acf_fields)
 	{
