@@ -16,10 +16,6 @@ class BrandTaxonomy
 	{
 		add_action('init', array($this, 'register_custom_taxonomy'));
 		add_filter('timber_context', array($this, 'add_brand_to_context'), 10, 3);
-		add_filter('agreable_base_theme_article_basic_acf', array($this, 'apply_acf_to_brand'), 10, 1);
-		add_filter('agreable_base_theme_category_widgets_acf', array($this, 'apply_acf_to_brand'), 10, 1);
-		add_filter('agreable_base_theme_social_media_acf', array($this, 'apply_acf_to_brand'), 10, 1);
-		add_filter('agreable_base_theme_html_overrides_acf', array($this, 'apply_acf_to_brand'), 10, 1);
 		add_filter('admin_menu', array($this, 'remove_brand_box'), 10, 1);
 		add_Filter('agreable_base_theme_article_basic_acf', array($this, 'add_nice_brand_selector'), 10, 2);
 		add_action('wp_head', array($this, 'create_brand_reference'));
@@ -91,27 +87,6 @@ class BrandTaxonomy
 			$context['brands'] = $this->get_brand();
 		}
 		return $context;
-	}
-	public function brand_permalink($permalink, $post_id, $leavename)
-	{
-		// No brand in the permalink so bail out
-		if (strpos($permalink, '%brand%') === false) {
-			return $permalink;
-		}
-		// If no post is returned for some reason bail out
-		$post = get_post($post_id);
-		if (!$post) {
-			return $permalink;
-		}
-		// Tryr and get value of the 'brand' field
-		$terms = wp_get_object_terms($post->ID, 'brand');
-		if (!is_wp_error($terms) && !empty($terms) && is_object($terms[0])) {
-			$taxonomy_slug = $terms[0]->slug;
-		} else {
-			// set a default if one isn't set.
-			$taxonomy_slug = 'uk';
-		}
-		return str_replace('%brand%', $taxonomy_slug, $permalink);
 	}
 
 	// Register Custom Taxonomy
