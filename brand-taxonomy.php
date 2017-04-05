@@ -2,50 +2,50 @@
 <?php
 /**
 * @wordpress-plugin
-* Plugin Name: brand-taxonomy
-* Plugin URI: http://github.com/shortlist-digital/brand-taxonomy
-* Description: Add a brand to a product post
+* Plugin Name: beauty-product-brand-taxonomy
+* Plugin URI: http://github.com/shortlist-digital/beauty-product-brand-taxonomy
+* Description: Add a beauty product brand to a product post
 * Version: 1.0.0
 * Author: Shortlist Studio
 * Author URI: http://shortlist.studio
 * License: MIT
 */
-class BrandTaxonomy
+class BeautyProductBrandTaxonomy
 {
 	public function __construct()
 	{
 		add_action('init', array($this, 'register_custom_taxonomy'));
-		add_filter('timber_context', array($this, 'add_brand_to_context'), 10, 3);
-		add_filter('admin_menu', array($this, 'remove_brand_box'), 10, 1);
-		add_Filter('agreable_base_theme_article_basic_acf', array($this, 'add_nice_brand_selector'), 10, 2);
-		add_action('wp_head', array($this, 'create_brand_reference'));
+		add_filter('timber_context', array($this, 'add_beauty_product_brand_to_context'), 10, 3);
+		add_filter('admin_menu', array($this, 'remove_beauty_product_brand_box'), 10, 1);
+		add_Filter('agreable_base_theme_article_basic_acf', array($this, 'add_nice_beauty_product_brand_selector'), 10, 2);
+		add_action('wp_head', array($this, 'create_beauty_product_brand_reference'));
 	}
-	private function get_brand() {
+	private function get_beauty_product_brand() {
 		global $post;
 		if (!empty($post)) {
-	   		return get_the_terms($post->ID, 'brand')[0];
+	   		return get_the_terms($post->ID, 'beauty_product_brand')[0];
 		} else {
 			return null;
 		}
 	}
-	public function remove_brand_box()
+	public function remove_beauty_product_brand_box()
 	{
-		remove_meta_box('tagsdiv-brand', 'product', 'normal');
+		remove_meta_box('tagsdiv-beauty_product_brand', 'product', 'normal');
 	}
-	public function add_nice_brand_selector()
+	public function add_nice_beauty_product_brand_selector()
 	{
 		acf_add_local_field_group(array (
-			'key' => 'group_brand',
-			'title' => 'Brand',
+			'key' => 'group_beauty_product_brand',
+			'title' => 'Beauty Product Brand',
 			'fields' => array (
 				array (
-					'key' => 'product_brand',
-					'label' => 'Brand',
-					'name' => 'brand',
+					'key' => 'product_beauty_product_brand',
+					'label' => 'Beauty Product Brand',
+					'name' => 'beauty_product_brand',
 					'type' => 'taxonomy',
-					'instructions' => 'Select a brand for this content',
+					'instructions' => 'Select a beauty product brand for this content',
 					'required' => 1,
-					'taxonomy' => 'brand',
+					'taxonomy' => 'beauty_product_brand',
 					'field_type' => 'select',
 					'allow_null' => 0,
 					'add_term' => 0,
@@ -55,7 +55,7 @@ class BrandTaxonomy
 					'label_placement' => 'top',
 					'instruction_placement' => 'label',
 					'active' => 1,
-					'description' => 'Select a brand for this content',
+					'description' => 'Select a beauty product brand for this content',
 				),
 			),
 			'location' => array (
@@ -69,22 +69,22 @@ class BrandTaxonomy
 			),
 		));
 	}
-	public function apply_acf_to_brand($acf_fields)
+	public function apply_acf_to_beauty_product_brand($acf_fields)
 	{
-		array_push($acf_fields['brand'], array(
+		array_push($acf_fields['beauty_product_brand'], array(
 			array(
 				'param' => 'taxonomy',
 				'operator' => '==',
-				'value' => 'brand',
+				'value' => 'beauty_product_brand',
 			),
 		));
 		return $acf_fields;
 	}
-	public function add_brand_to_context($context)
+	public function add_beauty_product_brand_to_context($context)
 	{
 		global $post;
 		if ($post) {
-			$context['brands'] = $this->get_brand();
+			$context['beauty_product_brands'] = $this->get_beauty_product_brand();
 		}
 		return $context;
 	}
@@ -93,26 +93,26 @@ class BrandTaxonomy
 	public function register_custom_taxonomy()
 	{
 		$labels = array(
-			'name'                       => _x( 'Brand', 'Taxonomy General Name', 'text_domain' ),
-			'singular_name'              => _x( 'Brand', 'Taxonomy Singular Name', 'text_domain' ),
-			'menu_name'                  => __( 'Brand', 'text_domain' ),
-			'all_items'                  => __( 'All brands', 'text_domain' ),
-			'parent_item'                => __( 'Parent brand', 'text_domain' ),
-			'parent_item_colon'          => __( 'Parent brand:', 'text_domain' ),
-			'new_item_name'              => __( 'New brand', 'text_domain' ),
-			'add_new_item'               => __( 'Add brand', 'text_domain' ),
-			'edit_item'                  => __( 'Edit brand', 'text_domain' ),
-			'update_item'                => __( 'Update brand', 'text_domain' ),
-			'view_item'                  => __( 'View brand', 'text_domain' ),
-			'separate_items_with_commas' => __( 'Separate brands with commas', 'text_domain' ),
-			'add_or_remove_items'        => __( 'Add or remove brands', 'text_domain' ),
+			'name'                       => _x( 'Beauty Product Brand', 'Taxonomy General Name', 'text_domain' ),
+			'singular_name'              => _x( 'Beauty Product Brand', 'Taxonomy Singular Name', 'text_domain' ),
+			'menu_name'                  => __( 'Beauty Product Brand', 'text_domain' ),
+			'all_items'                  => __( 'All beauty product brands', 'text_domain' ),
+			'parent_item'                => __( 'Parent beauty product brand', 'text_domain' ),
+			'parent_item_colon'          => __( 'Parent beauty product brand:', 'text_domain' ),
+			'new_item_name'              => __( 'New beauty product brand', 'text_domain' ),
+			'add_new_item'               => __( 'Add beauty product brand', 'text_domain' ),
+			'edit_item'                  => __( 'Edit beauty product brand', 'text_domain' ),
+			'update_item'                => __( 'Update beauty product brand', 'text_domain' ),
+			'view_item'                  => __( 'View beauty product brand', 'text_domain' ),
+			'separate_items_with_commas' => __( 'Separate beauty product brands with commas', 'text_domain' ),
+			'add_or_remove_items'        => __( 'Add or remove beauty product brands', 'text_domain' ),
 			'choose_from_most_used'      => __( 'Choose from the most used', 'text_domain' ),
-			'popular_items'              => __( 'Popular brands', 'text_domain' ),
-			'search_items'               => __( 'Search brands', 'text_domain' ),
+			'popular_items'              => __( 'Popular beauty product brands', 'text_domain' ),
+			'search_items'               => __( 'Search beauty product brands', 'text_domain' ),
 			'not_found'                  => __( 'Not Found', 'text_domain' ),
-			'no_terms'                   => __( 'No brands', 'text_domain' ),
-			'items_list'                 => __( 'Brands list', 'text_domain' ),
-			'items_list_navigation'      => __( 'Brands list navigation', 'text_domain' ),
+			'no_terms'                   => __( 'No beauty product brands', 'text_domain' ),
+			'items_list'                 => __( 'Beauty Product Brands list', 'text_domain' ),
+			'items_list_navigation'      => __( 'Beauty Product Brands list navigation', 'text_domain' ),
 		);
 		$args = array(
 			'labels'                     => $labels,
@@ -127,14 +127,14 @@ class BrandTaxonomy
 				'with_front' => false
 			),
 			'show_in_rest'       => true,
-			'rest_base'          => 'brands',
+			'rest_base'          => 'beauty_product_brands',
 			'rest_controller_class' => 'WP_REST_Terms_Controller',
 		);
-		register_taxonomy('brand', array( 'product' ), $args);
+		register_taxonomy('beauty_product_brand', array( 'product' ), $args);
 	}
-	public function create_brand_reference() {
-		$brand_object = json_encode($this->get_brand());
-		echo "<script>window.agreableBrand = " . $brand_object . "</script>";
+	public function create_beauty_product_brand_reference() {
+		$beauty_product_brand_object = json_encode($this->get_beauty_product_brand());
+		echo "<script>window.agreableBeautyProductBrand = " . $beauty_product_brand_object . "</script>";
 	}
 }
-new BrandTaxonomy();
+new BeautyProductBrandTaxonomy();
