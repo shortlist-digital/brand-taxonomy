@@ -17,7 +17,7 @@ class BeautyProductBrandTaxonomy
 		add_action('init', array($this, 'register_custom_taxonomy'));
 		add_filter('timber_context', array($this, 'add_beauty_product_brand_to_context'), 10, 3);
 		add_filter('admin_menu', array($this, 'remove_beauty_product_brand_box'), 10, 1);
-		add_Filter('agreable_base_theme_article_basic_acf', array($this, 'add_nice_beauty_product_brand_selector'), 10, 2);
+		add_Filter('init', array($this, 'add_nice_beauty_product_brand_selector'), 10, 2);
 		add_action('wp_head', array($this, 'create_beauty_product_brand_reference'));
 	}
 	private function get_beauty_product_brand() {
