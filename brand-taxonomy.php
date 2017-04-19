@@ -2,7 +2,7 @@
 <?php
 /**
 * @wordpress-plugin
-* Plugin Name: beauty-product-brand-taxonomy
+* Plugin Name: Beauty Product Brand Taxonomy
 * Plugin URI: http://github.com/shortlist-digital/beauty-product-brand-taxonomy
 * Description: Add a beauty product brand to a product post
 * Version: 1.0.0
