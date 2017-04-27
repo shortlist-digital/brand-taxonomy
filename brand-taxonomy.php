@@ -2,7 +2,7 @@
 <?php
 /**
 * @wordpress-plugin
-* Plugin Name: beauty-product-brand-taxonomy
+* Plugin Name: Beauty Product Brand Taxonomy
 * Plugin URI: http://github.com/shortlist-digital/beauty-product-brand-taxonomy
 * Description: Add a beauty product brand to a product post
 * Version: 1.0.0
@@ -17,7 +17,7 @@ class BeautyProductBrandTaxonomy
 		add_action('init', array($this, 'register_custom_taxonomy'));
 		add_filter('timber_context', array($this, 'add_beauty_product_brand_to_context'), 10, 3);
 		add_filter('admin_menu', array($this, 'remove_beauty_product_brand_box'), 10, 1);
-		add_Filter('agreable_base_theme_article_basic_acf', array($this, 'add_nice_beauty_product_brand_selector'), 10, 2);
+		add_filter('init', array($this, 'add_nice_beauty_product_brand_selector'), 10, 2);
 		add_action('wp_head', array($this, 'create_beauty_product_brand_reference'));
 	}
 	private function get_beauty_product_brand() {
@@ -51,11 +51,7 @@ class BeautyProductBrandTaxonomy
 					'add_term' => 0,
 					'save_terms' => 1,
 					'load_terms' => 1,
-					'return_format' => 'object',
-					'label_placement' => 'top',
-					'instruction_placement' => 'label',
-					'active' => 1,
-					'description' => 'Select a beauty product brand for this content',
+					'return_format' => 'object'
 				),
 			),
 			'location' => array (
@@ -63,10 +59,14 @@ class BeautyProductBrandTaxonomy
 					array (
 						'param' => 'post_type',
 						'operator' => '==',
-						'value' => 'product',
+						'value' => 'product'
 					),
 				),
 			),
+			'hide_on_screen' => array (
+				0 => 'the_content',
+			),
+			'description' => 'Select a beauty product brand for this content'
 		));
 	}
 	public function apply_acf_to_beauty_product_brand($acf_fields)
